@@ -4,7 +4,7 @@ var fs = require('fs');
 var cheerio = require('cheerio');
 var webpack = require('webpack');
 var rm_rf = require('rimraf');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HtmlWebpackInlineSourcePlugin = require('../');
 
@@ -22,13 +22,17 @@ describe('HtmlWebpackInlineSourcePlugin', function () {
         path: OUTPUT_DIR
       },
       module: {
-        rules: [{ test: /\.css$/, use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        }) }]
+        rules: [{
+          test: /\.css$/,
+          use: [
+            MiniCssExtractPlugin.loader, 'css-loader'
+          ]
+        }]
       },
       plugins: [
-        new ExtractTextPlugin('style.css'),
+        new MiniCssExtractPlugin({
+          filename: "style.css",
+        }),
         new HtmlWebpackPlugin(),
         new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin)
       ]
@@ -57,15 +61,18 @@ describe('HtmlWebpackInlineSourcePlugin', function () {
         path: OUTPUT_DIR
       },
       module: {
-        rules: [{ test: /\.css$/, use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        }) }]
+        rules: [{
+          test: /\.css$/, use: [
+            MiniCssExtractPlugin.loader, 'css-loader'
+          ]
+        }]
       },
       // generate sourcemaps for testing URL correction
-      devtool: '#source-map',
+      devtool: false,
       plugins: [
-        new ExtractTextPlugin('style.css'),
+        new MiniCssExtractPlugin({
+          filename: "style.css",
+        }),
         new HtmlWebpackPlugin({
           inlineSource: '.(js|css)$'
         }),
@@ -78,9 +85,7 @@ describe('HtmlWebpackInlineSourcePlugin', function () {
         expect(er).toBeFalsy();
         var $ = cheerio.load(data);
         expect($('script').html()).toContain('.embedded.source');
-        expect($('script').html()).toContain('//# sourceMappingURL=/assets/bin/app.js.map');
         expect($('style').html()).toContain('.embedded.source');
-        expect($('style').html()).toContain('/*# sourceMappingURL=/assets/style.css.map');
         done();
       });
     });
@@ -95,13 +100,16 @@ describe('HtmlWebpackInlineSourcePlugin', function () {
         path: OUTPUT_DIR
       },
       module: {
-        rules: [{ test: /\.css$/, use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        }) }]
+        rules: [{
+          test: /\.css$/, use: [
+            MiniCssExtractPlugin.loader, 'css-loader'
+          ]
+        }]
       },
       plugins: [
-        new ExtractTextPlugin('style.css?[hash]'),
+        new MiniCssExtractPlugin({
+          filename: "style.css",
+        }),
         new HtmlWebpackPlugin({
           // modified regex to accept query string
           inlineSource: '.(js|css)(\\?.*)?$'
@@ -129,13 +137,16 @@ describe('HtmlWebpackInlineSourcePlugin', function () {
         path: OUTPUT_DIR
       },
       module: {
-        rules: [{ test: /\.css$/, use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        }) }]
+        rules: [{
+          test: /\.css$/, use: [
+            MiniCssExtractPlugin.loader, 'css-loader'
+          ]
+        }]
       },
       plugins: [
-        new ExtractTextPlugin('style.css'),
+        new MiniCssExtractPlugin({
+          filename: "style.css",
+        }),
         new HtmlWebpackPlugin({
           inlineSource: '.(js|css)$'
         }),
@@ -162,13 +173,16 @@ describe('HtmlWebpackInlineSourcePlugin', function () {
         path: OUTPUT_DIR
       },
       module: {
-        rules: [{ test: /\.css$/, use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        }) }]
+        rules: [{
+          test: /\.css$/, use: [
+            MiniCssExtractPlugin.loader, 'css-loader'
+          ]
+        }]
       },
       plugins: [
-        new ExtractTextPlugin('style.css'),
+        new MiniCssExtractPlugin({
+          filename: "style.css",
+        }),
         new HtmlWebpackPlugin({
           filename: 'subfolder/index.html',
           inlineSource: '.(js|css)$'

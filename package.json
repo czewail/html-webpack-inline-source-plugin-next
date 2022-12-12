@@ -1,7 +1,7 @@
 {
-  "name": "html-webpack-inline-source-plugin",
-  "version": "1.0.0-beta.2",
-  "description": "Embed javascript and css source inline when using the webpack dev server or middleware",
+  "name": "html-webpack-inline-source-plugin-next",
+  "version": "2.0.0",
+  "description": "Embed javascript and css source inline when using the webpack dev server or middleware for webpack 5",
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
@@ -10,37 +10,40 @@
   ],
   "scripts": {
     "prepublish": "npm run test",
-    "pretest": "semistandard",
     "test": "jasmine",
     "debug": "node-debug jasmine"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dustinjackson/html-webpack-inline-source-plugin.git"
+    "url": "hhttps://github.com/czewail/html-webpack-inline-source-plugin-next"
   },
   "keywords": [
+    "webpack5",
     "webpack",
     "plugin",
     "html-webpack-plugin",
     "inline",
     "source"
   ],
-  "author": "Dustin Jackson <dustin.jackson@live.com> (https://github.com/DustinJackson)",
+  "authors": [
+    "Dustin Jackson <dustin.jackson@live.com> (https://github.com/DustinJackson)",
+    "Chanzewail <chanzewail@gmail.com> (https://github.com/czewail)"
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dustinjackson/html-webpack-inline-source-plugin/issues"
+    "url": "https://github.com/czewail/html-webpack-inline-source-plugin-next/issues"
   },
-  "homepage": "https://github.com/dustinjackson/html-webpack-inline-source-plugin",
+  "homepage": "https://github.com/czewail/html-webpack-inline-source-plugin-next",
   "devDependencies": {
+    "acorn": "^8.8.1",
     "cheerio": "^0.22.0",
-    "css-loader": "^0.25.0",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "html-webpack-plugin": "^4.0.0-beta.4",
+    "css-loader": "^6.7.2",
+    "html-webpack-plugin": "^5.5.0",
     "jasmine": "^2.4.1",
+    "mini-css-extract-plugin": "^2.7.2",
     "rimraf": "^2.5.2",
-    "semistandard": "^7.0.5",
-    "style-loader": "^0.13.1",
-    "webpack": "^4.20.2"
+    "style-loader": "^3.3.1",
+    "webpack": "^5.75.0"
   },
   "dependencies": {
     "escape-string-regexp": "^1.0.5",

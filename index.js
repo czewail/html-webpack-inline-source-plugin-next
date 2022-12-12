@@ -4,7 +4,7 @@ var path = require('path');
 var slash = require('slash');
 var sourceMapUrl = require('source-map-url');
 
-function HtmlWebpackInlineSourcePlugin (htmlWebpackPlugin) {
+function HtmlWebpackInlineSourcePlugin(htmlWebpackPlugin) {
   this.htmlWebpackPlugin = htmlWebpackPlugin;
 }
 
@@ -12,7 +12,7 @@ HtmlWebpackInlineSourcePlugin.prototype.apply = function (compiler) {
   var self = this;
 
   // Hook into the html-webpack-plugin processing
-  compiler.hooks.compilation.tap('html-webpack-inline-source-plugin', compilation => {
+  compiler.hooks.compilation.tap('html-webpack-inline-source-plugin', (compilation) => {
     self.htmlWebpackPlugin
       .getHooks(compilation)
       .alterAssetTagGroups.tapAsync('html-webpack-inline-source-plugin', (htmlPluginData, callback) => {
@@ -50,7 +50,7 @@ HtmlWebpackInlineSourcePlugin.prototype.processTags = function (compilation, reg
 };
 
 HtmlWebpackInlineSourcePlugin.prototype.resolveSourceMaps = function (compilation, assetName, asset) {
-  var source = asset.source();
+  var source = asset.source.source();
   var out = compilation.outputOptions;
   // Get asset file absolute path
   var assetPath = path.join(out.path, assetName);
@@ -95,7 +95,7 @@ HtmlWebpackInlineSourcePlugin.prototype.processTag = function (compilation, rege
       }
     };
 
-  // inline css
+    // inline css
   } else if (tag.tagName === 'link' && regex.test(tag.attributes.href)) {
     assetUrl = tag.attributes.href;
     tag = {
@@ -110,32 +110,21 @@ HtmlWebpackInlineSourcePlugin.prototype.processTag = function (compilation, rege
   if (assetUrl) {
     // Strip public URL prefix from asset URL to get Webpack asset name
     var publicUrlPrefix = compilation.outputOptions.publicPath || '';
+    if (publicUrlPrefix === 'auto') publicUrlPrefix = ''
     // if filename is in subfolder, assetUrl should be prepended folder path
     if (path.basename(filename) !== filename) {
       assetUrl = path.dirname(filename) + '/' + assetUrl;
     }
     var assetName = path.posix.relative(publicUrlPrefix, assetUrl);
-    var asset = getAssetByName(compilation.assets, assetName);
-    if (compilation.assets[assetName] !== undefined) {
+    var asset = compilation.getAsset(assetName);
+    if (asset) {
       var updatedSource = this.resolveSourceMaps(compilation, assetName, asset);
       tag.innerHTML = (tag.tagName === 'script') ? updatedSource.replace(/(<)(\/script>)/g, '\\x3C$2') : updatedSource;
-    }else{
+    } else {
       return preTag;
     }
   }
-
   return tag;
 };
-
-function getAssetByName (assests, assetName) {
-  for (var key in assests) {
-    if (assests.hasOwnProperty(key)) {
-      var processedKey = path.posix.relative('', key);
-      if (processedKey === assetName) {
-        return assests[key];
-      }
-    }
-  }
-}
 
 module.exports = HtmlWebpackInlineSourcePlugin;
