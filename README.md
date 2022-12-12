@@ -3,12 +3,16 @@
 
 Inline Source extension for the HTML Webpack Plugin
 ========================================
-[![npm version](https://badge.fury.io/js/html-webpack-inline-source-plugin.svg)](https://badge.fury.io/js/html-webpack-inline-source-plugin) [![Build status](https://travis-ci.org/DustinJackson/html-webpack-inline-source-plugin.svg?branch=master)](https://travis-ci.org/DustinJackson/html-webpack-inline-source-plugin) [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
+[![npm version](https://badge.fury.io/js/html-webpack-inline-source-plugin-next.svg)](https://badge.fury.io/js/html-webpack-inline-source-plugin-next) [![Build status](https://travis-ci.org/czewail/html-webpack-inline-source-plugin-next.svg?branch=master)](https://travis-ci.org/czewail/html-webpack-inline-source-plugin-next) [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
 
-Enhances [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin)
+Enhances [html-webpack-plugin-next](https://github.com/ampedandwired/html-webpack-plugin)
 functionality by adding the `{inlineSource: 'regex string'}` option.
 
 This is an extension plugin for the [webpack](http://webpack.github.io) plugin [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin) (version 4 or higher).  It allows you to embed javascript and css source inline.
+
+👏👏👏 Support Webpack 5 👏👏👏
+
+Fork from: https://github.com/DustinJackson/html-webpack-inline-source-plugin
 
 Installation
 ------------
